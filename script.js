@@ -61,23 +61,52 @@ const people = [
 
 // Array.prototype.filter()
 // 1. Filter the list of inventors for those who were born in the 1500's
+const fifteenHundred = inventors.filter(
+    (x) => x.year >= 1500 && x.year <= 1600
+);
+console.table(fifteenHundred);
 
 // Array.prototype.map()
 // 2. Give us an array of the inventors first and last names
 
+let inventorsName = inventors.map((x) => x.first + " " + x.last);
+console.log(inventorsName);
+
 // Array.prototype.sort()
 // 3. Sort the inventors by birthdate, oldest to youngest
+let inventorsAge = inventors.sort((a, b) => (a.year > b.year ? 1 : -1));
+console.table(inventorsAge);
 
 // Array.prototype.reduce()
 // 4. How many years did all the inventors live all together?
+//here a is the starting of the number in which we want to add and 0 is provided at the end to provide the starting value of total to 0;
+const totalAge = inventors.reduce((a, b) => a + (b.passed - b.year), 0);
+console.log(totalAge);
 
 // 5. Sort the inventors by years lived
+const ageLived = inventors.sort(
+    (a, b) => b.passed - b.year - (a.passed - a.year)
+);
+console.table(ageLived);
 
 // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
 // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+// this excercise will be dome in cosnsole as it  is a live website;
+const category = document.querySelector(".mw-category");
+const links = Array.from(category.querySelectorAll("a"));
+const deWord = links
+    .filter((a) => a.textContent.includes("de"))
+    .map((a) => console.log(a.textContent));
+console.log(deWord);
+
 // 7. sort Exercise
 // Sort the people alphabetically by last name
+// it is preferred to use  ternary operator in sort method because it helps in writing small code
+const sortedName = people.sort((a, b) =>
+    a.split(", ")[1] > b.split(", ")[1] ? 1 : -1
+);
+console.table(sortedName);
 
 // 8. Reduce Exercise
 // Sum up the instances of each of these
@@ -97,3 +126,25 @@ const data = [
     "car",
     "truck",
 ];
+const vehicleData = data.reduce((obj, item) => {
+    //obj[item] will evaluate false if  it has the value of zero   obj[item]=0  so it will evaluate false; so we are using obj[item]++ outside any conditonal so that it changes the value and next time it does not evaluate false and not set the value again to 0
+    if (!obj[item]) {
+        obj[item] = 0;
+    }
+    obj[item]++;
+    // we need to return obj here beacause for each item it need to get a reference that this value is reduced from last item
+    return obj;
+}, {});
+console.log(vehicleData);
+
+function x(y) {
+    let obj = {};
+    for (let item of y) {
+        if (!obj[item]) {
+            obj[item] = 0;
+        }
+        obj[item]++;
+    }
+    console.log(obj);
+}
+x(data);
